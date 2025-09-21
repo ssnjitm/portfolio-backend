@@ -16,7 +16,6 @@ const projectSchema = new mongoose.Schema({
         required: true,
     },
     liveLink: String,
-    tags: [String],
     createdAt: {
         type: Date,
         default: Date.now,

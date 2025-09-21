@@ -1,41 +1,23 @@
-// server/models/Admin.js
-import bcrypt from 'bcryptjs'
-import mongoose from 'mongoose'
+// models/admin.model.js
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const adminSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true,
+  email: { type: String, required: true, unique: true },
+  passwordHash: { type: String, required: true },
+});
 
-    },
-    passwordHash: {
-        type: String,
-        required: true,
-    },
-    fullName: String,
-    email: String,
-    phone: String,
-    location: String,
-    profileImage: String, // URL of profile photo
-    socialLinks: {
-        github: String,
-        linkedin: String,
-        twitter: String,
-        portfolio: String,
-        youtube: String,
-        facebook: String,
-        instagram: String,
-        upwork: String,
-        freelancer: String,
-        fiverr: String,
-        others: String,
+adminSchema.methods.isPasswordCorrect = async function (password) {
+  return bcrypt.compare(password, this.passwordHash);
+};
 
-    },
-})
+adminSchema.methods.generateAccessToken = function () {
+  return jwt.sign(
+    { _id: this._id, email: this.email },
+    process.env.ACCESS_TOKEN_SECRET,
+    { expiresIn: "1d" }
+  );
+};
 
-// Password check method
-adminSchema.methods.comparePassword = async function(password) {
-    return await bcrypt.compare(password, this.passwordHash)
-}
-
-export default mongoose.model('Admin', adminSchema)
+export default mongoose.model("Admin", adminSchema);

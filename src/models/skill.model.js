@@ -1,18 +1,18 @@
-// server/models/Skill.js
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
-const skillSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+const skillSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true }, 
+    description: { type: String, default: "" }, 
+    level: {
+      type: String,
+      enum: ["Beginner", "Intermediate", "Advanced"],
+      default: "Intermediate",
+    },
+    experience: { type: String, default: "" }, 
+    iconUrl: { type: String }, 
   },
-  category: String, // e.g., Frontend, Backend, Tools
-  level: {
-    type: String,
-    enum: ['Beginner', 'Intermediate', 'Advanced'],
-    default: 'Intermediate',
-  },
-  imageUrl: String, // ✅ NEW: icon or logo image (URL)
-})
+  { timestamps: true }
+);
 
-export default mongoose.model('Skill', skillSchema)
+export default mongoose.model("Skill", skillSchema);
