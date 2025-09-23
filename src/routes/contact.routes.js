@@ -11,6 +11,6 @@ const router = express.Router();
 router.get('/', getContactInfo);
 
 // Protected route
-router.patch('/', verifyJWT, updateContactInfo);
+router.patch('/',  updateContactInfo); //verifyJWT,
 
 export default router;

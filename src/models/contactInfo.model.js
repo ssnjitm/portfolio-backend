@@ -9,6 +9,9 @@ const contactSchema = new mongoose.Schema({
     github: String,
     linkedin: String,
     twitter: String,
+    facebook: String,
+    instagram: String,
+    // Add more as needed
   },
 })
 

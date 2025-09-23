@@ -18,6 +18,6 @@ router.post('/login', loginAdmin);
 // Protected routes (require JWT authentication)
 router.post('/logout', verifyJWT, logoutAdmin);
 router.get('/profile', verifyJWT, getAdminProfile);
-router.patch('/profile', verifyJWT, upload.single('profileImage'), updateAdminProfile);
+router.patch('/profile', verifyJWT,  updateAdminProfile);
 
 export default router;

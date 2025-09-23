@@ -16,8 +16,8 @@ router.get('/', getExperiences);
 router.get('/:id', getExperience);
 
 // Protected routes (require JWT authentication)
-router.post('/', verifyJWT, upload.single('jobThumbnail'), createExperience);
+router.post('/',  upload.single('jobThumbnail'), createExperience); //verifyJWT,
 router.patch('/:id', verifyJWT, upload.single('jobThumbnail'), updateExperience);
 router.delete('/:id', verifyJWT, deleteExperience);
-
+ 
 export default router;

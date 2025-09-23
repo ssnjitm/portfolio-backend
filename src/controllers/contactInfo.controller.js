@@ -26,40 +26,47 @@ const getContactInfo = asyncHandler(async(req, res) => {
         .json(new ApiResponse(200, contactInfo, "Contact info fetched successfully"));
 });
 
+
 // Update contact info
-const updateContactInfo = asyncHandler(async(req, res) => {
-    const { email, phone, location, socialLinks } = req.body;
+const updateContactInfo = asyncHandler(async (req, res) => {
+  const { email, phone, location, socialLinks } = req.body;
 
-    let contactInfo = await ContactInfo.findOne();
+  let contactInfo = await ContactInfo.findOne();
 
-    if (!contactInfo) {
-        // Create new contact info if it doesn't exist
-        contactInfo = await ContactInfo.create({
-            email,
-            phone,
-            location,
-            socialLinks: socialLinks ? JSON.parse(socialLinks) : {
-                github: '',
-                linkedin: '',
-                twitter: ''
-            }
-        });
-    } else {
-        // Update existing contact info
-        contactInfo = await ContactInfo.findOneAndUpdate({}, {
-            $set: {
-                email,
-                phone,
-                location,
-                socialLinks: socialLinks ? JSON.parse(socialLinks) : contactInfo.socialLinks
-            }
-        }, { new: true });
-    }
+  if (!contactInfo) {
+    contactInfo = await ContactInfo.create({
+      email,
+      phone,
+      location,
+      socialLinks: socialLinks || {
+        github: "",
+        linkedin: "",
+        twitter: "",
+        facebook: "",
+        instagram: "",
+      },
+    });
+  } else {
+    contactInfo = await ContactInfo.findOneAndUpdate(
+      {},
+      {
+        $set: {
+          email,
+          phone,
+          location,
+          socialLinks: typeof socialLinks === "string"
+            ? JSON.parse(socialLinks) // only parse if string
+            : socialLinks || contactInfo.socialLinks
+        },
+      },
+      { new: true }
+    );
+  }
 
-    return res.status(200)
-        .json(new ApiResponse(200, contactInfo, "Contact info updated successfully"));
+  return res
+    .status(200)
+    .json(new ApiResponse(200, contactInfo, "Contact info updated successfully"));
 });
-
 export {
     getContactInfo,
     updateContactInfo
