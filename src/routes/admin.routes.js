@@ -1,23 +1,27 @@
-import express from 'express';
+import express from "express";
 import {
-    getAdminProfile,
-    loginAdmin,
-    logoutAdmin,
-    registerAdmin,
-    updateAdminProfile
-} from '../controllers/admin.controller.js';
-import { verifyJWT } from '../middlewares/auth.middleware.js';
-import { upload } from '../middlewares/multer.middleware.js';
+  getAdminProfile,
+  loginAdmin,
+  logoutAdmin,
+  registerAdmin,
+  updateAdminProfile,
+  changePassword,
+} from "../controllers/admin.controller.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { upload } from "../middlewares/multer.middleware.js";
 
 const router = express.Router();
 
-// Unprotected routes
-router.post('/register', upload.single('profileImage'), registerAdmin);
-router.post('/login', loginAdmin);
+// Public route (only for testing/dev)
+router.post("/register", registerAdmin);
 
-// Protected routes (require JWT authentication)
-router.post('/logout', verifyJWT, logoutAdmin);
-router.get('/profile', verifyJWT, getAdminProfile);
-router.patch('/profile', verifyJWT,  updateAdminProfile);
+// Public login
+router.post("/login", loginAdmin);
+
+// Protected routes
+router.post("/logout", verifyJWT, logoutAdmin);
+router.get("/profile", verifyJWT, getAdminProfile);
+router.patch("/profile", verifyJWT, upload.single("profileImage"), updateAdminProfile);
+router.patch("/change-password", verifyJWT, changePassword);
 
 export default router;

@@ -16,7 +16,9 @@ const getContactInfo = asyncHandler(async(req, res) => {
                 socialLinks: {
                     github: '',
                     linkedin: '',
-                    twitter: ''
+                    twitter: '',
+                    upwork: '',
+                    fiverr: ''
                 }
             }, "Contact info fetched successfully")
         );

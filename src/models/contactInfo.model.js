@@ -11,6 +11,11 @@ const contactSchema = new mongoose.Schema({
     twitter: String,
     facebook: String,
     instagram: String,
+    upwork: String, // Add more as needed
+    fiverr: String,
+    viber:String,
+    whatsapp:String,
+
     // Add more as needed
   },
 })

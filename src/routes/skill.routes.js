@@ -24,12 +24,13 @@
 import express from "express";
 import { createSkill, deleteSkill, getSkills, updateSkill } from "../controllers/skill.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
 router.get("/", getSkills);
-router.post("/", upload.single("image"), createSkill);
-router.patch("/:id", upload.single("image"), updateSkill);
-router.delete("/:id", deleteSkill);
+router.post("/",verifyJWT, upload.single("image"), createSkill);
+router.patch("/:id",verifyJWT, upload.single("image"), updateSkill);
+router.delete("/:id",verifyJWT, deleteSkill);
 
 export default router;

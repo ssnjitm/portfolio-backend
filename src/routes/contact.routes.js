@@ -5,12 +5,13 @@ import {
 } from '../controllers/contactInfo.controller.js';
 import { verifyJWT } from '../middlewares/auth.middleware.js';
 
+
 const router = express.Router();
 
 // Public route
 router.get('/', getContactInfo);
 
 // Protected route
-router.patch('/',  updateContactInfo); //verifyJWT,
+router.patch('/',verifyJWT,  updateContactInfo); //verifyJWT,
 
 export default router;

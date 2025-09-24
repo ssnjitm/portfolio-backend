@@ -19,6 +19,12 @@ const uploadToCloudinary = (
       folder: folderName,
       resource_type: resourceType,
     };
+
+    // If filename suggests it's a document (pdf/docx), force raw
+    if (fileName && fileName.match(/\.(pdf|docx?|pptx?|xlsx?|zip)$/i)) {
+      options.resource_type = "raw";
+    }
+
     if (fileName) options.public_id = fileName.replace(/\.[^/.]+$/, "");
     if (format) options.format = format;
 

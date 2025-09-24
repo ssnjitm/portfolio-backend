@@ -11,6 +11,7 @@ router.get("/", getWebContent);
 // Protected route for upsert
 router.post(
   "/",
+  verifyJWT,
   
   upload.fields([
     { name: "aboutMeImage", maxCount: 1 },

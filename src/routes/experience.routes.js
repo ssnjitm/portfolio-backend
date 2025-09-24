@@ -11,12 +11,11 @@ import { upload } from '../middlewares/multer.middleware.js';
 
 const router = express.Router();
 
-// Public routes (no authentication needed)
 router.get('/', getExperiences);
 router.get('/:id', getExperience);
 
 // Protected routes (require JWT authentication)
-router.post('/',  upload.single('jobThumbnail'), createExperience); //verifyJWT,
+router.post('/',verifyJWT,  upload.single('jobThumbnail'), createExperience); //verifyJWT,
 router.patch('/:id', verifyJWT, upload.single('jobThumbnail'), updateExperience);
 router.delete('/:id', verifyJWT, deleteExperience);
  

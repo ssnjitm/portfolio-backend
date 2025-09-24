@@ -16,7 +16,7 @@ router.get('/', getProjects);
 router.get('/:id', getProject);
 
 // Protected
-router.post('/',  upload.single('image'), createProject);
+router.post('/',verifyJWT,  upload.single('image'), createProject);
 router.patch('/:id', verifyJWT, upload.single('image'), updateProject);
 router.delete('/:id', verifyJWT, deleteProject);
 
