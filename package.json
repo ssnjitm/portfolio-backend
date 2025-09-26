@@ -5,6 +5,7 @@
     "type": "module",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
+        "start":" node -r dotenv/config --experimental-json-modules src/server.js",
         "dev": "nodemon -r dotenv/config --experimental-json-modules src/server.js",
         "seed": "node -r dotenv/config src/seed.js",
         "seed:prod": "NODE_ENV=production SEED_ADMIN=true node -r dotenv/config src/seed.js"
