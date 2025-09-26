@@ -10,6 +10,7 @@ const projectSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    techstack:String,
     imageUrl: String, // Optional image
     githubLink: {
         type: String,

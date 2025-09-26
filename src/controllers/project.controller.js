@@ -6,7 +6,7 @@ import uploadToCloudinary from '../utils/cloudinary.js';
 
 // Create project
 const createProject = asyncHandler(async(req, res) => {
-    const { title, description, githubLink, liveLink, tags } = req.body;
+    const { title, description, githubLink, liveLink, teckstack } = req.body;
 
     if (!title) {
         throw new ApiError(400, "Title is required");
@@ -18,7 +18,7 @@ const createProject = asyncHandler(async(req, res) => {
         imageUrl = result.secure_url;
     }
 
-    const tagArray = tags ? tags.split(',').map(tag => tag.trim()) : [];
+    const tagArray = teckstack ? teckstack.split(',').map(tag => teckstack.trim()) : [];
 
     const project = await Project.create({
         title,
@@ -26,7 +26,7 @@ const createProject = asyncHandler(async(req, res) => {
         imageUrl,
         githubLink,
         liveLink,
-        tags: tagArray
+        teckstack: tagArray
     });
 
     return res.status(201)
@@ -57,7 +57,7 @@ const getProject = asyncHandler(async(req, res) => {
 // Update project
 const updateProject = asyncHandler(async(req, res) => {
     const { id } = req.params;
-    const { title, description, githubLink, liveLink, tags } = req.body;
+    const { title, description, githubLink, liveLink, teckstack } = req.body;
 
     let imageUrl;
     if (req.file) {
@@ -65,7 +65,7 @@ const updateProject = asyncHandler(async(req, res) => {
         imageUrl = result.secure_url;
     }
 
-    const tagArray = tags ? tags.split(',').map(tag => tag.trim()) : [];
+    const tagArray = teckstack ? teckstack.split(',').map(teckstack => teckstack.trim()) : [];
 
     const project = await Project.findByIdAndUpdate(
         id, {
@@ -75,7 +75,7 @@ const updateProject = asyncHandler(async(req, res) => {
                 description,
                 githubLink,
                 liveLink,
-                tags: tagArray
+                teckstack: tagArray
             }
         }, { new: true }
     );
