@@ -3,7 +3,7 @@ import express from "express";
 const app = express();
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
-dotenv.config({ path: "./config/.env" });
+dotenv.config();
 import router from "./routes/index.js";
 
 
