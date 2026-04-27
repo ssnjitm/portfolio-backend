@@ -3,9 +3,7 @@ import { app } from "./app.js";
 import connectDB from "./config/db.config.js";
 
 dotenv.config({
-    path: "./.env"
-
-})
+});
 const PORT =process.env.PORT || 7860;
 
 // // Only run seed in development or if explicitly requested
