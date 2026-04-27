@@ -2,14 +2,8 @@ import dotenv from "dotenv";
 import { app } from "./app.js";
 import connectDB from "./config/db.config.js";
 
-dotenv.config({
-});
-const PORT =process.env.PORT || 7860;
-
-// // Only run seed in development or if explicitly requested
-// if (process.env.NODE_ENV === 'development' || process.env.SEED_ADMIN === 'true') {
-//     import ('./seed.js');
-// }
+dotenv.config();
+const PORT =process.env.PORT;
 
 //connection to mongodb
 connectDB()

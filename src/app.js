@@ -8,8 +8,6 @@ import router from "./routes/index.js";
 
 
 
-
-
 // Middleware
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
