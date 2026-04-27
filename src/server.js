@@ -6,16 +6,17 @@ dotenv.config({
     path: "./.env"
 
 })
+const PORT =process.env.PORT || 7860;
 
-// Only run seed in development or if explicitly requested
-if (process.env.NODE_ENV === 'development' || process.env.SEED_ADMIN === 'true') {
-    import ('./seed.js');
-}
+// // Only run seed in development or if explicitly requested
+// if (process.env.NODE_ENV === 'development' || process.env.SEED_ADMIN === 'true') {
+//     import ('./seed.js');
+// }
 
 //connection to mongodb
 connectDB()
     .then(() => {
-        app.listen(process.env.PORT || 8000, () => {
+        app.listen(PORT, '0.0.0.0',() => {
             console.log(`server is running at port :${process.env.PORT}`)
         })
     })
