@@ -6,7 +6,7 @@ import uploadToCloudinary from '../utils/cloudinary.js';
 
 // Create project
 const createProject = asyncHandler(async(req, res) => {
-    const { title, description, githubLink, liveLink, teckstack } = req.body;
+    const { title, description, githubLink, liveLink, techstack } = req.body;
 
     if (!title) {
         throw new ApiError(400, "Title is required");
@@ -18,7 +18,9 @@ const createProject = asyncHandler(async(req, res) => {
         imageUrl = result.secure_url;
     }
 
-    const tagArray = teckstack ? teckstack.split(',').map(tag => teckstack.trim()) : [];
+    const tagArray = techstack
+        ? (Array.isArray(techstack) ? techstack : techstack.split(',').map(t => t.trim()).filter(Boolean))
+        : [];
 
     const project = await Project.create({
         title,
@@ -26,7 +28,7 @@ const createProject = asyncHandler(async(req, res) => {
         imageUrl,
         githubLink,
         liveLink,
-        teckstack: tagArray
+        techstack: tagArray
     });
 
     return res.status(201)
@@ -37,8 +39,23 @@ const createProject = asyncHandler(async(req, res) => {
 const getProjects = asyncHandler(async(req, res) => {
     const projects = await Project.find().sort({ createdAt: -1 });
 
+    // Normalize techstack for old documents that used 'teckstack' (typo) or stored as string
+    const normalized = projects.map(p => {
+        const doc = p.toObject();
+        // merge old teckstack typo into techstack
+        const raw = doc.techstack ?? doc.teckstack;
+        if (Array.isArray(raw)) {
+            doc.techstack = raw;
+        } else if (typeof raw === 'string' && raw.trim()) {
+            doc.techstack = raw.split(',').map(t => t.trim()).filter(Boolean);
+        } else {
+            doc.techstack = [];
+        }
+        return doc;
+    });
+
     return res.status(200)
-        .json(new ApiResponse(200, projects, "Projects fetched successfully"));
+        .json(new ApiResponse(200, normalized, "Projects fetched successfully"));
 });
 
 // Get single project
@@ -57,7 +74,7 @@ const getProject = asyncHandler(async(req, res) => {
 // Update project
 const updateProject = asyncHandler(async(req, res) => {
     const { id } = req.params;
-    const { title, description, githubLink, liveLink, teckstack } = req.body;
+    const { title, description, githubLink, liveLink, techstack } = req.body;
 
     let imageUrl;
     if (req.file) {
@@ -65,7 +82,9 @@ const updateProject = asyncHandler(async(req, res) => {
         imageUrl = result.secure_url;
     }
 
-    const tagArray = teckstack ? teckstack.split(',').map(teckstack => teckstack.trim()) : [];
+    const tagArray = techstack
+        ? (Array.isArray(techstack) ? techstack : techstack.split(',').map(t => t.trim()).filter(Boolean))
+        : [];
 
     const project = await Project.findByIdAndUpdate(
         id, {
@@ -75,7 +94,7 @@ const updateProject = asyncHandler(async(req, res) => {
                 description,
                 githubLink,
                 liveLink,
-                teckstack: tagArray
+                techstack: tagArray
             }
         }, { new: true }
     );
