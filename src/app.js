@@ -10,6 +10,7 @@ import router from "./routes/index.js";
 
 // Middleware
 app.use(cors({
+    origin: true,
     origin: process.env.CORS_ORIGIN,
     credentials: true,
 }))
