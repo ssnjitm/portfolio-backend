@@ -1,14 +1,8 @@
 {
   "version": 3,
   "functions": {
-    "src/app.js": {
+    "functions/index.js": {
       "runtime": "nodejs18.x"
     }
-  },
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/src/app.js"
-    }
-  ]
+  }
 }
