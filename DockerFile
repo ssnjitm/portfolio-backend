@@ -17,8 +17,8 @@ RUN npm install
 # Copy the rest of your application
 COPY --chown=user . .
 
-# Match the HF default port
-EXPOSE 7860
+# Expose the port used by your app
+EXPOSE 8000
 
-# Start the server
-CMD ["node", "index.js"]
+# Start the server using the existing npm script
+CMD ["npm", "start"]

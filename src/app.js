@@ -27,4 +27,5 @@ app.use(cookieParser())
 // Routes
 app.use('/api/v1', router);
 
+export default app;
 export { app };
