@@ -27,5 +27,8 @@ app.use(cookieParser())
 // Routes
 app.use('/api/v1', router);
 
+export const config = {
+  runtime: "nodejs18.x"
+};
+
 export default app;
-export { app };
