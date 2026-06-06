@@ -3,15 +3,18 @@ import app from "./app.js";
 import connectDB from "./config/db.config.js";
 
 dotenv.config();
-const PORT =process.env.PORT;
 
-//connection to mongodb
+// Define port with a fallback fallback
+const PORT = process.env.PORT || 5000;
+
+// Connection to MongoDB
 connectDB()
     .then(() => {
-        app.listen(PORT, '0.0.0.0',() => {
-            console.log(`server is running at port :${process.env.PORT}`)
-        })
+        // REMOVED '0.0.0.0' so Vercel can handle the hostname binding automatically
+        app.listen(PORT, () => {
+            console.log(`Server is running at port: ${PORT}`);
+        });
     })
     .catch((err) => {
-        console.log("Mongodb connection failed !!!", err);
-    })
+        console.error("Mongodb connection failed !!!", err);
+    });
