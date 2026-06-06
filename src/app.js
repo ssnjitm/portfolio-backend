@@ -26,6 +26,11 @@ app.use(cookieParser())
 
 // Routes
 app.use('/api/v1', router);
+// Dummy test route directly on the entry point
+app.get("/api/v1/test", (req, res) => {
+    res.json({ message: "Backend is reachable!" });
+});
+
 
 export default app;
 export { app };
